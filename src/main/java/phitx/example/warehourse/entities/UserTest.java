@@ -26,7 +26,7 @@ public class UserTest implements Serializable {
         private String email;
 
         @Column(nullable = false)
-        private String encryptedPassword;
+        private String password;
 
         private String emailVerificationToken;
 
@@ -74,11 +74,11 @@ public class UserTest implements Serializable {
     }
 
     public String getEncryptedPassword() {
-        return encryptedPassword;
+        return password;
     }
 
     public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+        this.password = encryptedPassword;
     }
 
     public String getEmailVerificationToken() {
