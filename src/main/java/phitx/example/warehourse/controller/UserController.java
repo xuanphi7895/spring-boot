@@ -9,6 +9,7 @@ import phitx.example.warehourse.model.request.UserDetailRequestModel;
 import phitx.example.warehourse.model.response.UserTestRest;
 import phitx.example.warehourse.services.UserTestService;
 import phitx.example.warehourse.shared.DTO.UserTestDTO;
+import phitx.example.warehourse.shared.Util.Utils;
 
 
 @RestController
@@ -17,6 +18,8 @@ public class UserController {
     @Autowired
     UserTestService userService;
 
+
+
     @GetMapping
     public String getUser(){
         return "User";
@@ -24,6 +27,7 @@ public class UserController {
 
     @PostMapping
     public UserTestRest createUser(@RequestBody UserDetailRequestModel userDetails){
+
         UserTestRest returnValue = new UserTestRest();
 
         UserTestDTO userDTO = new UserTestDTO();

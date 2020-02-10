@@ -8,6 +8,7 @@ import phitx.example.warehourse.entities.UserTest;
 import phitx.example.warehourse.repository.UserTestRepository;
 import phitx.example.warehourse.services.UserTestService;
 import phitx.example.warehourse.shared.DTO.UserTestDTO;
+import phitx.example.warehourse.shared.Util.Utils;
 
 @Service
 public class UserTestServiceImpl implements UserTestService {
@@ -15,11 +16,20 @@ public class UserTestServiceImpl implements UserTestService {
     @Autowired
     UserTestRepository userTestRepository;
 
+    @Autowired
+    Utils utils;
+
     @Override
     public UserTestDTO createUserTest(UserTestDTO user) {
+
+        UserTest storedUserEntity = userTestRepository.findUserByEmail(user.getEmail());
+        if ( userTestRepository.findUserByEmail(user.getEmail()) != null) throw new RuntimeException("Record already exists!");
+
         UserTest userTest = new UserTest();
         BeanUtils.copyProperties(user, userTest);
 
+        String publicUserId =  utils.generateUserId(30);
+        userTest.setUserId(publicUserId);
         userTest.setEncryptedPassword("test");
 
         UserTest userTestEntity = userTestRepository.save(userTest);
