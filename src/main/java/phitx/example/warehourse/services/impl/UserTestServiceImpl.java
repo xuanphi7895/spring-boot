@@ -2,6 +2,9 @@ package phitx.example.warehourse.services.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import phitx.example.warehourse.entities.User;
 import phitx.example.warehourse.entities.UserTest;
@@ -19,6 +22,9 @@ public class UserTestServiceImpl implements UserTestService {
     @Autowired
     Utils utils;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public UserTestDTO createUserTest(UserTestDTO user) {
 
@@ -30,6 +36,7 @@ public class UserTestServiceImpl implements UserTestService {
 
         String publicUserId =  utils.generateUserId(30);
         userTest.setUserId(publicUserId);
+        //userTest.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getUserId()));
         userTest.setEncryptedPassword("test");
 
         UserTest userTestEntity = userTestRepository.save(userTest);
@@ -38,5 +45,10 @@ public class UserTestServiceImpl implements UserTestService {
         BeanUtils.copyProperties(userTestEntity, returnValue);
 
         return returnValue;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return null;
     }
 }
