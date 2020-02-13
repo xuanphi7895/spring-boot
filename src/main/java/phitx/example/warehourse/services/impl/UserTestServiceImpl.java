@@ -2,16 +2,18 @@ package phitx.example.warehourse.services.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import phitx.example.warehourse.entities.User;
 import phitx.example.warehourse.entities.UserTest;
 import phitx.example.warehourse.repository.UserTestRepository;
 import phitx.example.warehourse.services.UserTestService;
 import phitx.example.warehourse.shared.DTO.UserTestDTO;
 import phitx.example.warehourse.shared.Util.Utils;
+
+import java.util.ArrayList;
 
 @Service
 public class UserTestServiceImpl implements UserTestService {
@@ -36,8 +38,8 @@ public class UserTestServiceImpl implements UserTestService {
 
         String publicUserId =  utils.generateUserId(30);
         userTest.setUserId(publicUserId);
-        //userTest.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getUserId()));
-        userTest.setEncryptedPassword("test");
+        userTest.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getEncryptedPassword()));
+        //userTest.setEncryptedPassword("test");
 
         UserTest userTestEntity = userTestRepository.save(userTest);
 
@@ -48,7 +50,9 @@ public class UserTestServiceImpl implements UserTestService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserTest  userTest =  userTestRepository.findUserByEmail(email);
+        if (userTest == null) throw new UsernameNotFoundException(email);
+        return new User(userTest.getEmail(), userTest.getEncryptedPassword(), new ArrayList<>());
     }
 }
