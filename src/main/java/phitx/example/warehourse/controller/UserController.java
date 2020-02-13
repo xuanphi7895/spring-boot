@@ -31,6 +31,7 @@ public class UserController {
         UserTestRest returnValue = new UserTestRest();
 
         UserTestDTO userDTO = new UserTestDTO();
+        userDTO.setEncryptedPassword(userDetails.getPassword());
         BeanUtils.copyProperties(userDetails, userDTO);
 
         UserTestDTO createUser = userService.createUserTest(userDTO);

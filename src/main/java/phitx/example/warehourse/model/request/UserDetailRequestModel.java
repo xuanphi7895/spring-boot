@@ -7,6 +7,15 @@ public class UserDetailRequestModel {
     private String lastName;
     private String email;
     private String password;
+    private String emailVerificationToken;
+
+    public String getEmailVerificationToken() {
+        return emailVerificationToken;
+    }
+
+    public void setEmailVerificationToken(String emailVerificationToken) {
+        this.emailVerificationToken = emailVerificationToken;
+    }
 
     public String getFirstName() {
         return firstName;
