@@ -8,6 +8,8 @@ public interface UserTestService extends UserDetailsService {
 
     UserTestDTO createUserTest(UserTestDTO user);
 
+    UserTestDTO getUser(String email);
+    //UserTestDTO getUser(String email);
 
 
 }
