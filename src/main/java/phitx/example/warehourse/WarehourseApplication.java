@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import phitx.example.warehourse.security.AppProperties;
 
 @SpringBootApplication
 @EnableJpaRepositories()
@@ -22,5 +23,10 @@ public class WarehourseApplication {
 	@Bean
 	public SpringApplicationContext springApplicationContext(){
 		return new SpringApplicationContext();
+	}
+
+	@Bean(name="AppProperties")
+	public AppProperties getAppProperties(){
+		return new AppProperties();
 	}
 }
