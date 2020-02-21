@@ -50,6 +50,19 @@ public class UserTestServiceImpl implements UserTestService {
     }
 
     @Override
+    public UserTestDTO getUser(String email) {
+        UserTest userEntity = userTestRepository.findUserByEmail(email);
+
+        if (userEntity == null)
+            throw new UsernameNotFoundException(email);
+
+        UserTestDTO returnValue = new UserTestDTO();
+        BeanUtils.copyProperties(userEntity, returnValue);
+
+        return returnValue;
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserTest  userTest =  userTestRepository.findUserByEmail(email);
         if (userTest == null) throw new UsernameNotFoundException(email);
