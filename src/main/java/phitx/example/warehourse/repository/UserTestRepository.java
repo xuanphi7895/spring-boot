@@ -7,4 +7,5 @@ import phitx.example.warehourse.entities.UserTest;
 @Repository
 public interface UserTestRepository extends CrudRepository<UserTest, Long> {
     UserTest findUserByEmail(String email);
+    UserTest findUserByUserId(String userId);
 }
