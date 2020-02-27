@@ -10,6 +10,6 @@ public interface UserTestService extends UserDetailsService {
 
     UserTestDTO getUser(String email);
     //UserTestDTO getUser(String email);
-
+    UserTestDTO getUserById(String id);
 
 }
