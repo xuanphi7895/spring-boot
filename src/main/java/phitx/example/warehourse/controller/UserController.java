@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import phitx.example.warehourse.entities.UserTest;
+import phitx.example.warehourse.exceptions.UserServiceException;
 import phitx.example.warehourse.model.request.UserDetailRequestModel;
+import phitx.example.warehourse.model.response.ErrorMessages;
 import phitx.example.warehourse.model.response.UserTestRest;
 import phitx.example.warehourse.services.UserTestService;
 import phitx.example.warehourse.shared.DTO.UserTestDTO;
@@ -27,6 +29,7 @@ public class UserController {
     {
         UserTestRest returnValue = new UserTestRest();
 
+
         UserTestDTO returnUser = userService.getUserById(userId);
 
         BeanUtils.copyProperties(returnUser, returnValue);
@@ -34,10 +37,10 @@ public class UserController {
     }
 
     @PostMapping
-    public UserTestRest createUser(@RequestBody UserDetailRequestModel userDetails){
+    public UserTestRest createUser(@RequestBody UserDetailRequestModel userDetails) throws Exception {
 
         UserTestRest returnValue = new UserTestRest();
-
+        if(userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
         UserTestDTO userDTO = new UserTestDTO();
         userDTO.setEncryptedPassword(userDetails.getPassword());
         BeanUtils.copyProperties(userDetails, userDTO);
